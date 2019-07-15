@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>{% block title %}{% endblock %} | Bike Management</title>
+    <title>{% block title %}{% endblock %} | Admin panel</title>
     <link rel="stylesheet" href="{{ asset('assets/bootstrap-4.0.0-dist/css/bootstrap.min.css') }}">
 
     {#        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.18/datatables.min.css"/>#}
@@ -14,17 +14,15 @@
 <body>
 <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
     <!-- Brand -->
-    <a class="navbar-brand" href="{{ path('home_page') }}">Bike Management</a>
+    <a class="navbar-brand" href="{{ path('admin_index') }}">Admin Panel</a>
 
     <!-- Links -->
     <ul class="navbar-nav">
-        <li class="nav-item">
-            <a class="nav-link" href="{{ path('home_page') }}">Register</a>
-        </li>
+        {% if app.session.get('user') %}
         <li class="nav-item">
             <a class="nav-link" href="{{ path('home_page') }}">Search</a>
         </li>
-
+        {% endif %}
         <!-- Dropdown -->
         <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">

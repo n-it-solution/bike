@@ -1,0 +1,21 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Company List{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 offset-4">
+                <h5>Login Here to access all pages</h5>
+                <form action="" method="post">
+                    <label>Email</label>
+                    <input type="email" class="form-control" name="email">
+                    <label>Password</label>
+                    <input type="password" class="form-control" name="pass">
+                    <br>
+                    <input type="submit" value="Login" class="btn btn-success">
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}
