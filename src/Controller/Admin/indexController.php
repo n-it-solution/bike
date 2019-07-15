@@ -3,6 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Admin;
+use App\Entity\Users;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
@@ -31,4 +32,72 @@ class indexController extends AbstractController
             return $this->render('admin/index/index.html.twig');
         }
     }
+
+
+
+
+    private $user = null;
+    private $loggedin = false;
+
+    public function __construct()
+    {
+        if (isset($_SESSION['user'])){
+            $this->user = $_SESSION['user'];
+            $this->loggedin = true;
+        }
+    }
+
+
+
+
+    /**
+     * @Route("/User/index", name="user_index")
+     */
+    public function User_index(Request $request)
+    {
+        return $this->render('login.html.twig');
+    }
+
+
+
+    /**
+     * @Route("/User/Login", name="user_login")
+     */
+    public function User_Login(Request $request)
+    {
+        $error = '';
+        if ($request->getMethod() == "POST")
+        {
+            $username = $request->get('username');
+            $password = $request->get('password');
+//            $password = md5($pass);
+
+            $user = $this->getDoctrine()->getRepository(Users::class)->findOneBy(
+                ['username' => $username, 'password' => $password]
+            );
+            if (!empty($user))
+            {
+//                    echo 1;
+                if (session_status() === PHP_SESSION_NONE){
+                    session_start();
+                }
+                $_SESSION['user'] = $user;
+                $em = $this->getDoctrine()->getManager();
+                $id = $user->getId();
+                $myuser = $em->getRepository(Users::class)->find($id);
+                $date = date('Y-m-d');
+                $myuser->setLastLogin($date);
+                $em->flush();
+
+                    return $this->redirectToRoute('super_admin_homepage');
+            }
+            $error = 'Username Or Password Is Incorrect!';
+            return $this->render('adminlogin/login.html.twig',
+                ['NotMatch' => $error]);
+        }
+        return $this->render('adminlogin/login.html.twig',
+            ['NotMatch' => $error]);
+    }
+
+
 }
