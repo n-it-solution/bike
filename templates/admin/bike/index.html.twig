@@ -1,37 +1,49 @@
 {% extends 'admin/base.html.twig' %}
 
-{% block title %}Company List{% endblock %}
+{% block title %}Bikes{% endblock %}
 
 {% block body %}
     <div class="container">
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-7">
                 <table class="table table-striped">
                     <tr>
                         <th>#</th>
                         <th>Name</th>
+                        <th>Price</th>
+                        <th>Company Name</th>
                         <th>Pic</th>
                         <th>Action</th>
                     </tr>
-                    {% for i in company %}
+                    {% for i in bikes %}
                         <tr>
                             <td>{{ loop.index }}</td>
                             <td>{{ i.name }}</td>
+                            <td>{{ i.price }}$</td>
+                            <td>{{ i.company.name }}</td>
                             <td><img src="{{ asset(i.pic) }}" style="width: 50px;height: 50px"></td>
                             <td>
-                                <a href="#"><input type="button" class="btn btn-primary" value="Bikes"></a>
+                                <a href="#">Edit</a> / <a href="">Delete</a>
                             </td>
                         </tr>
                     {% endfor %}
                 </table>
             </div>
-            <div class="col-md-4 offset-2">
+            <div class="col-md-4 offset-1">
                 <h5>Add new company</h5>
                 <form action="" method="post" enctype="multipart/form-data">
                     <label>Name</label>
                     <input type="text" class="form-control" name="name" required>
+                    <label>Price</label>
+                    <input type="number" class="form-control" name="price" required>
                     <label>Pic</label>
                     <input type="file" class="form-control" name="doc" required>
+                    <label>Company</label>
+                    <select name="company" class="form-control">
+                        {% for i in company %}
+                        <option value="{{ i.id }}">{{ i.name }}</option>
+                        {% endfor %}
+                    </select>
                     <br>
                     <input type="submit" value="Add" class="btn btn-success">
                 </form>
