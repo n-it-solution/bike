@@ -17,14 +17,15 @@ class indexController extends AbstractController
     public function index(Request $request)
     {
         $session = New Session();
-        if (!empty($session->get('user'))){
+        if (!empty($session->get('admin'))){
             return $this->redirectToRoute('admin_company');
         }
         else {
             if ($request->getMethod() == 'POST') {
                 $check = $this->getDoctrine()->getRepository(Admin::class)->findOneBy(['Email' => $request->get('email'), 'Password' => $request->get('pass')]);
                 if (!empty($check)) {
-                    $session->set('user', $check);
+                    $session->set('admin', $check);
+                    return $this->redirectToRoute('admin_company');
                 } else {
                     echo '<script>alert("Email and Password not correct")</script>';
                 }
@@ -33,7 +34,14 @@ class indexController extends AbstractController
         }
     }
 
-
+    /**
+     * @Route("/admin/logout", name="admin_logout")
+     */
+    public function logout(){
+        $session = New Session();
+        $session->remove('admin');
+        return $this->redirectToRoute('admin_index');
+    }
 
 
     private $user = null;
@@ -128,5 +136,14 @@ class indexController extends AbstractController
             ['NotMatch' => $error]);
     }
 
-
+    /**
+     * @Route("/User/logout", name="user_logout")
+     */
+    public function userLogout(){
+        if (session_status() === PHP_SESSION_NONE){
+            session_start();
+        }
+        session_destroy();
+        return $this->redirectToRoute('user_login');
+    }
 }

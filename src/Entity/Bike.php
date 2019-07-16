@@ -33,7 +33,7 @@ class Bike
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Company")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
      */
     private $Company;
 

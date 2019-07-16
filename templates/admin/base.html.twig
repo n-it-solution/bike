@@ -18,35 +18,18 @@
 
     <!-- Links -->
     <ul class="navbar-nav">
-        {% if app.session.get('user') %}
+        {% if app.session.get('admin') %}
         <li class="nav-item">
-            <a class="nav-link" href="{{ path('home_page') }}">Search</a>
+            <a class="nav-link" href="{{ path('admin_company') }}">Company</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{ path('admin_bike') }}">Bikes</a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link" href="{{ path('admin_logout') }}">Logout</a>
         </li>
         {% endif %}
-        <!-- Dropdown -->
-        <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
-                Charges
-            </a>
-            <div class="dropdown-menu">
-                <a class="dropdown-item" href="{{ path('home_page') }}">Charges Type</a>
-                <a class="dropdown-item" href="{{ path('home_page') }}">Charges List</a>
-                <a class="dropdown-item" href="#">Link 3</a>
-            </div>
-        </li>
-        <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
-                Plots
-            </a>
-            <div class="dropdown-menu">
-                <a class="dropdown-item" href="{{ path('home_page') }}">Plots list</a>
-                <a class="dropdown-item" href="{{ path('home_page') }}">Transfer plot</a>
-                <a class="dropdown-item" href="#">Link 3</a>
-            </div>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#">Logout</a>
-        </li>
     </ul>
 </nav>
 <br>

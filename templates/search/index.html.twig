@@ -108,7 +108,17 @@
     <div class="container-fluid">
         <div class="container">
             <div class="row">
-                {% for b in Bikes %}
+                <div class="col-md-4 offset-4">
+                    <form action="" method="get">
+                        <label>Search</label>
+                        <input type="text" name="search" class="form-control">
+                        <br>
+                        <input type="submit" name="submit" class="btn btn-success">
+                    </form>
+                </div>
+                <div class="col-md-4"></div>
+                {% if show %}
+                {% for b in bike %}
                     <div class="col-sm-4">
                         <div class="card card-price">
                             <div class="card-img">
@@ -126,6 +136,26 @@
                         </div>
                     </div>
                 {% endfor %}
+                    <div class="row">
+                        {% for c in company %}
+                            <div class="col-sm-4">
+                                <div class="card card-price">
+                                    <div class="card-img">
+                                        <a href="#">
+                                            <img src="{{ asset(c.pic) }}" style="width: 100%;" class="img-responsive">
+                                        </a>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="price" style="font-size: 20px;">{{ c.name }}</div>
+                                        <a href="{{ path('show_bikes',{id:c.id}) }}" style="margin-top: 30px; font-size: 15px;" class="btn btn-primary btn-lg btn-block buy-now">
+                                            Explore Bikes <span class="glyphicon glyphicon-triangle-right"></span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
             </div>
         </div>
     </div>

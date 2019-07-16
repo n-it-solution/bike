@@ -1,6 +1,6 @@
 {% extends 'admin/base.html.twig' %}
 
-{% block title %}Company List{% endblock %}
+{% block title %}Company{% endblock %}
 
 {% block body %}
     <div class="container">
@@ -19,7 +19,7 @@
                         <td>{{ i.name }}</td>
                         <td><img src="{{ asset(i.pic) }}" style="width: 50px;height: 50px"></td>
                         <td>
-                            <a href="#"><input type="button" class="btn btn-primary" value="Bikes"></a>
+                            <a href="{{ path('admin_company_action',{action: 'edit', id: i.id}) }}">Edit</a> / <a href="{{ path('admin_company_action',{action: 'delete', id: i.id}) }}">Delete</a>
                         </td>
                     </tr>
                     {% endfor %}
