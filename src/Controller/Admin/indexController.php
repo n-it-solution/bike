@@ -58,6 +58,37 @@ class indexController extends AbstractController
         return $this->render('login.html.twig');
     }
 
+    /**
+     * @Route("/User/register", name="user_register")
+     */
+    public function User_register(Request $request)
+    {
+        $success = '';
+        $error = '';
+        if ($request->getMethod() == "POST"){
+            $em = $this->getDoctrine()->getManager();
+            $user = new Users();
+            $user->setUsername($request->get('username'));
+            $user->setEmail($request->get('email'));
+            $user->setPassword($request->get('password'));
+            $em->persist($user);
+            $em->flush();
+            $success = "Registered Successfully!";
+            return $this->render('register.html.twig',
+                [
+                    'Success' => $success,
+                    'Error' => $error
+                ]);
+        }else{
+            $error = "Not Registered";
+            return $this->render('register.html.twig',
+                [
+                    'Success' => $success,
+                    'Error' => $error
+                ]);
+        }
+    }
+
 
 
     /**
@@ -85,17 +116,15 @@ class indexController extends AbstractController
                 $em = $this->getDoctrine()->getManager();
                 $id = $user->getId();
                 $myuser = $em->getRepository(Users::class)->find($id);
-                $date = date('Y-m-d');
-                $myuser->setLastLogin($date);
                 $em->flush();
 
-                    return $this->redirectToRoute('super_admin_homepage');
+                    return $this->redirectToRoute('home_page');
             }
             $error = 'Username Or Password Is Incorrect!';
-            return $this->render('adminlogin/login.html.twig',
+            return $this->render('login.html.twig',
                 ['NotMatch' => $error]);
         }
-        return $this->render('adminlogin/login.html.twig',
+        return $this->render('login.html.twig',
             ['NotMatch' => $error]);
     }
 
